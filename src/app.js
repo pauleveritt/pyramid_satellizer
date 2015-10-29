@@ -1,36 +1,65 @@
 function HomeController ($log, $auth, $http) {
-    this.title = "home controller";
-
-    $http.get(
-        'http://localhost:6543/auth/login'
-    ).then(
-        function () {
-            $log.debug("yes")
-        },
-        function () {
-            $log.debug("no")
-        }
-    );
+    var vm = this;
+    this.title = 'home controller';
+    this.alert = '';
+    this.success = '';
+    this.$auth = $auth;
+    this.fullName = '';
 
     // Defaults
-    this.username = "admin";
-    this.password = "admin";
+    this.username = 'editor';
+    this.password = 'editor';
 
     this.login = function () {
-        $auth.login({username: username, password: password})
-            .then(function (response) {
-                // Redirect user here after a successful log in.
+        var userInfo = {username: vm.username, password: vm.password};
+        $auth.login(userInfo)
+            .then(function () {
+                vm.alert = '';
+                vm.success = 'Login successful';
+
+                // Now go get profile information
+                $http.get('/api/profile')
+                    .then(function (response) {
+                        var rd = response.data;
+                        vm.fullName = rd.firstName + ' ' + rd.lastName;
+                    })
             })
             .catch(function (response) {
                 // Handle errors here, such as displaying a notification
                 // for invalid email and/or password.
+                vm.success = '';
+                vm.alert = 'Failed login';
+                $log.debug('Failed login with response', response.data);
             });
+    };
+
+    this.logout = function () {
+        $auth.logout()
+            .then(function () {
+                vm.success = 'You have been logged out';
+                vm.alert = '';
+            });
+    };
+
+    this.getProtected = function () {
+        $http.get('/api/protected')
+            .then(function (response) {
+                var m = 'Successfully got /api/protected user: ';
+                vm.success =  m + response.data.user;
+                vm.alert = '';
+            })
+            .catch(function (response) {
+                vm.success = '';
+                var status = response.status;
+                vm.alert = 'Failed with HTTP status code:' + status;
+            })
     }
 }
 function ModuleConfig ($authProvider) {
-
-
+    $authProvider.loginUrl = '/api/login';
+    $authProvider.authToken = '';
 }
+
 angular.module('app', ['satellizer'])
     .config(ModuleConfig)
-    .controller("HomeController", HomeController);
+    .controller('HomeController', HomeController);

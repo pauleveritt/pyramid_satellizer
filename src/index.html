@@ -4,31 +4,57 @@
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body>
-<div class="container" ng-controller="HomeController as vm">
+<body class="container" ng-controller="HomeController as vm">
+<div class="row">
+  <div class="alert alert-danger"
+       ng-if="vm.alert" ng-bind="vm.alert"></div>
+  <div class="alert alert-success"
+       ng-if="vm.success" ng-bind="vm.success"></div>
+
+
   <h1>Satellizer Playground</h1>
 
-  <form class="col-md-4" ng-submit="vm.login()">
+  <form class="col-md-5 form-inline" ng-submit="vm.login()">
     <div class="form-group">
-      <label for="username">Username</label>
-      <input class="form-control" id="username"
-             placeholder="Username...."
-             ng-model="vm.username">
+      <input type="text" class="form-control"
+             placeholder="Username..." ng-model="vm.username">
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control"
-             id="password" placeholder="Password..."
-             ng-model="vm.password">
+      <input type="text" class="form-control"
+             placeholder="Password..." ng-model="vm.password">
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
 </div>
+<div class="row">
+  <div>
+    <h3>Login Information</h3>
+
+    <p ng-if="!vm.$auth.isAuthenticated()">Currently not logged in.</p>
+
+    <p ng-if="vm.$auth.isAuthenticated()">
+      Currently logged in as <em>{{vm.fullName}}</em>.
+      <button class="btn btn-default" ng-click="vm.logout()">Logout
+      </button>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <h3>Protected URL</h3>
+
+  <p>Clicking the button below tries to access
+    <code>/api/protected</code> which should fail if you are not
+    authenticated and succeed if you are. </p>
+
+  <button class="btn btn-default" ng-click="vm.getProtected()">
+    Get Protected URL
+  </button>
+
+</div>
 
 <script
     src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-<script
-    src="//cdn.jsdelivr.net/satellizer/0.12.5/satellizer.min.js"></script>
+<script src="satellizer.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
