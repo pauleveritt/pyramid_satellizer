@@ -19,9 +19,11 @@ Browser Usage
 
 - npm install
 
-- npm run dev
+- npm start
 
-- Go to http://localhost:8000/
+- Go to http://127.0.0.1:8080/src/
+
+- Live reload is available
 
 Background
 ==========

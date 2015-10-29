@@ -6,9 +6,23 @@
 </head>
 <body>
 <div class="container" ng-controller="HomeController as vm">
-  <h1>Satellizer Playgrounds</h1>
+  <h1>Satellizer Playground</h1>
 
-  <p ng-bind="vm.title">title</p>
+  <form class="col-md-4" ng-submit="vm.login()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input class="form-control" id="username"
+             placeholder="Username...."
+             ng-model="vm.username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control"
+             id="password" placeholder="Password..."
+             ng-model="vm.password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
 </div>
 
 <script
