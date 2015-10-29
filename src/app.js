@@ -1,5 +1,16 @@
-function HomeController ($log, $auth) {
+function HomeController ($log, $auth, $http) {
     this.title = "home controller";
+
+    $http.get(
+        'http://localhost:6543/auth/login'
+    ).then(
+        function () {
+            $log.debug("yes")
+        },
+        function () {
+            $log.debug("no")
+        }
+    );
 
     // Defaults
     this.username = "admin";

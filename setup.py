@@ -3,7 +3,8 @@ from setuptools import setup
 requires = [
     'pyramid',
     'waitress',
-    'pyramid_jwtauth'
+    'pyramid_jwtauth',
+    'wsgicors'
 ]
 setup(name='mysite',
       install_requires=requires,
