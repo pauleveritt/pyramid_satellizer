@@ -1,0 +1,24 @@
+{
+  "name": "pyramid_satellizer",
+  "version": "1.0.0",
+  "description": "Investigating JWT auth between Pyramid username/passwords and Angular using satellizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pauleveritt/pyramid_satellizer.git"
+  },
+  "author": "Paul Everitt <paul@agendaless.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pauleveritt/pyramid_satellizer/issues"
+  },
+  "homepage": "https://github.com/pauleveritt/pyramid_satellizer#readme",
+  "devDependencies": {
+    "eslint": "1.7.3",
+    "live-server": "0.8.2"
+  }
+}
