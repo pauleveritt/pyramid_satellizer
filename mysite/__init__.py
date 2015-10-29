@@ -25,4 +25,5 @@ def main (global_config, **settings):
 
     config.add_static_view(name='static', path='../src')
     config.scan('.views')
+
     return config.make_wsgi_app()

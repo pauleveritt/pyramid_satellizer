@@ -18,7 +18,7 @@ function HomeController ($log, $auth, $http) {
                 vm.success = 'Login successful';
 
                 // Now go get profile information
-                $http.get('/api/profile')
+                $http.get('http://127.0.0.1:6543/api/profile')
                     .then(function (response) {
                         var rd = response.data;
                         vm.fullName = rd.firstName + ' ' + rd.lastName;
@@ -42,7 +42,7 @@ function HomeController ($log, $auth, $http) {
     };
 
     this.getProtected = function () {
-        $http.get('/api/protected')
+        $http.get('http://127.0.0.1:6543/api/protected')
             .then(function (response) {
                 var m = 'Successfully got /api/protected user: ';
                 vm.success =  m + response.data.user;
@@ -56,7 +56,7 @@ function HomeController ($log, $auth, $http) {
     }
 }
 function ModuleConfig ($authProvider) {
-    $authProvider.loginUrl = '/api/login';
+    $authProvider.loginUrl = 'http://127.0.0.1:6543/api/login';
     $authProvider.authToken = '';
 }
 
