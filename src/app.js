@@ -7,21 +7,22 @@ function HomeController ($log, $auth, $http) {
     this.fullName = '';
 
     // Defaults
-    this.username = 'editor';
-    this.password = 'editor';
+    this.username = 'admin';
+    this.password = 'admin';
 
     this.login = function () {
-        var userInfo = {username: vm.username, password: vm.password};
-        $auth.login(userInfo)
+        var userInfo = {login: vm.username, password: vm.password,
+                        'form.submitted': 'submitted'};
+        $auth.login(userInfo, {method: 'POST', contentType: "application/x-www-form-urlencoded; charset=UTF-8"})
             .then(function () {
                 vm.alert = '';
                 vm.success = 'Login successful';
 
                 // Now go get profile information
-                $http.get('http://127.0.0.1:6543/api/profile')
+                $http.get('http://127.0.0.1:6543/profiles/' + vm.username)
                     .then(function (response) {
                         var rd = response.data;
-                        vm.fullName = rd.firstName + ' ' + rd.lastName;
+                        //vm.fullName = '';
                     })
             })
             .catch(function (response) {
@@ -42,7 +43,7 @@ function HomeController ($log, $auth, $http) {
     };
 
     this.getProtected = function () {
-        $http.get('http://127.0.0.1:6543/api/protected')
+        $http.get('http://127.0.0.1:6543/communities/active_communities.html')
             .then(function (response) {
                 var m = 'Successfully got /api/protected user: ';
                 vm.success =  m + response.data.user;
@@ -56,7 +57,7 @@ function HomeController ($log, $auth, $http) {
     }
 }
 function ModuleConfig ($authProvider) {
-    $authProvider.loginUrl = 'http://127.0.0.1:6543/api/login';
+    $authProvider.loginUrl = 'http://127.0.0.1:6543/login.html';
     $authProvider.authToken = '';
 }
 
