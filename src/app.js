@@ -22,7 +22,7 @@ function HomeController ($log, $auth, $http) {
                 $http.get('http://127.0.0.1:6543/profiles/' + vm.username)
                     .then(function (response) {
                         var rd = response.data;
-                        //vm.fullName = '';
+                        vm.fullName = rd.profile.title;
                     })
             })
             .catch(function (response) {
@@ -45,8 +45,8 @@ function HomeController ($log, $auth, $http) {
     this.getProtected = function () {
         $http.get('http://127.0.0.1:6543/communities/active_communities.html')
             .then(function (response) {
-                var m = 'Successfully got /api/protected user: ';
-                vm.success =  m + response.data.user;
+                var m = 'Successfully got active communities: first community name is ';
+                vm.success =  m + response.data.communities[0].name;
                 vm.alert = '';
             })
             .catch(function (response) {
